@@ -15,7 +15,7 @@ class TestSearch(object):
     trending_words_x = "//div[@class='com-dropdown-wrapper']/div[@class='dropdown-search clearfix']/div[1]/ul/li[{index}]"
 
 
-    #@allure.step('打开英文站首页，最大化111')
+    #@allure.step('打开英文站首页，最大化1111')
     def setup_method(self):
         self.driver = webdriver.Chrome()
         self.driver.get('https://www.ybox.com/en')
