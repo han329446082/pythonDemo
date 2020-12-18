@@ -22,7 +22,7 @@ class TestSearch(object):
         self.driver.maximize_window()
 
     #测试按照keywords进行搜索
-    @allure.feature("搜索模块")
+    @allure.feature("搜索模块1")
     @allure.story('搜索-关键字')
     @allure.title('测试用例名称：按照关键字进行搜索')
     def test_search_by_keywords(self):
