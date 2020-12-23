@@ -4,6 +4,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from util import util
 
 
 class TestSearch(object):
@@ -14,6 +15,8 @@ class TestSearch(object):
     # 热门搜索词的XPATH
     trending_words_x = "//div[@class='com-dropdown-wrapper']/div[@class='dropdown-search clearfix']/div[1]/ul/li[{index}]"
 
+    def setup_class(self):
+        self.logger = util.get_logger()
 
     #@allure.step('打开英文站首页，最大化')
     def setup_method(self):
@@ -29,14 +32,20 @@ class TestSearch(object):
         #输入关键字
         with allure.step('输入关键字'):
             self.driver.find_element(By.XPATH, self.keywords_input_x).send_keys('mask')
+        self.logger.debug('输入关键字%s','mask')
         #敲回车键
         with allure.step('敲回车'):
              self.driver.find_element(By.XPATH, self.keywords_input_x).send_keys(Keys.ENTER)
+        self.logger.debug('敲回车')
         #获取当前的URL
         curr_url = self.driver.current_url
         expected_url = 'https://www.ybox.com/en/search?track=search-input-0-mask&q=mask'
-        assert curr_url == expected_url
         sleep(3)
+        try:
+            assert curr_url == expected_url
+        except AssertionError as ae:
+            self.logger.error('按照关键字搜索有问题了',exc_info=expected_url)
+
 
     data = [1,2]
     @pytest.mark.parametrize('words_index',data)
@@ -45,6 +54,7 @@ class TestSearch(object):
     @allure.title('测试用例名称：按照热搜词的位置进行搜索')
     def test_search_by_trending(self,words_index):
         words_x2 = self.trending_words_x.format(index = words_index+1)
+        self.logger.debug('words_x2:%s',words_x2)
         # 光标定位到输入框，弹出搜索词弹层
         with allure.step('光标定位到输入框，弹出搜索词弹层'):
             self.driver.find_element(By.XPATH, self.keywords_input_x).click()
