@@ -8,7 +8,7 @@ from util import util
 
 
 class TestSearch(object):
-    # 搜索框的XPATH
+    # 搜索框的XPATH1
     keywords_input_x = "//div[@class='center-search clearfix']/form/input[@name='keywords']"
     #历史搜索词的XPATH
     history_words_x = "//div[@class='com-dropdown-wrapper']/div[@class='dropdown-search clearfix']/div[1]/ul/li[{index}]"
